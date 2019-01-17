@@ -1,0 +1,23 @@
+Game Production 6
+FPS/Room Base Arena
+
+Proof of concept 
+-	Damage between player and enemy
+-	Movement
+-	Simple Ai
+Weapons
+-	Charge laser
+-	Multiple Launcher (missile/grenades? – homing/deadfire?)
+o	***** Time limit allows (last of weapon system implemented)
+-	Hand grenades
+-	Shotgun
+-	Assault rifle
+Player
+-	Health
+-	Stamina
+-	Armour
+-	***** Time allows upgrade weapons
+Enemies
+-	Multiple enemies  per room
+-	Boss at end
+o	*****   If time allows boss should have multiple heath per limb (if limb is destroyed boss becomes crippled)
