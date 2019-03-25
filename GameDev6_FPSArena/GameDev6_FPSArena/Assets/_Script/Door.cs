@@ -1,0 +1,51 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Door : MonoBehaviour
+{
+    public bool inRange = false;
+    public bool open = false;
+    public bool locked = false;
+    public GameObject LeftDoor;
+    public GameObject RightDoor;
+    public float speed = 10.0f;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        openDoor();
+    }
+   void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            inRange = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            inRange = false;
+        }
+    }
+
+    void openDoor() {
+        if (inRange && !open)
+        {
+                LeftDoor.transform.Translate(Vector3.left * speed * Time.deltaTime);
+                RightDoor.transform.Translate(Vector3.right * speed * Time.deltaTime);
+            if(RightDoor.transform.localPosition.x > 2.5)
+            {
+                open = true;
+            }
+        }
+    }
+}

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     GameObject Camera;
     MouseLook turn;
 
+    
     public float speed = 5;
 
 	// Use this for initialization
