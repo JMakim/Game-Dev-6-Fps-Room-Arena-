@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - HIVE
   - TargetLock
+  - Key2
+  - Key1
+  - HiveGun
   layers:
   - Default
   - TransparentFX

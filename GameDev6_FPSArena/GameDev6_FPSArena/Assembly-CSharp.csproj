@@ -58,6 +58,7 @@
      <Compile Include="Assets\_Script\HiveProjectiles.cs" />
      <Compile Include="Assets\_Script\MouseLook.cs" />
      <Compile Include="Assets\_Script\Player.cs" />
+     <Compile Include="Assets\_Script\RoomControl.cs" />
      <Compile Include="Assets\_Script\TrackCheck.cs" />
      <Compile Include="Assets\_Script\TrackingEnemy.cs" />
      <Compile Include="Assets\_Script\WeaponTesting.cs" />

@@ -7,6 +7,11 @@ public class Door : MonoBehaviour
     public bool inRange = false;
     public bool open = false;
     public bool locked = false;
+
+    public bool Needkey = false;
+
+    public Player keyCheck;
+
     public GameObject LeftDoor;
     public GameObject RightDoor;
     public float speed = 10.0f;
@@ -20,7 +25,11 @@ public class Door : MonoBehaviour
     void Update()
     {
         openDoor();
+        closeDoor();
+        lockedDoor();
     }
+
+
    void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
@@ -34,17 +43,44 @@ public class Door : MonoBehaviour
         if(other.tag == "Player")
         {
             inRange = false;
+
         }
     }
 
     void openDoor() {
-        if (inRange && !open)
+        if (inRange && !open && !locked && !Needkey)
         {
                 LeftDoor.transform.Translate(Vector3.left * speed * Time.deltaTime);
                 RightDoor.transform.Translate(Vector3.right * speed * Time.deltaTime);
             if(RightDoor.transform.localPosition.x > 2.5)
             {
                 open = true;
+            }
+        }
+    }
+
+    void closeDoor()
+    {
+        if(!inRange && open)
+        {
+            LeftDoor.transform.Translate(Vector3.left * -speed * Time.deltaTime);
+            RightDoor.transform.Translate(Vector3.right * -speed * Time.deltaTime);
+
+            if(RightDoor.transform.localPosition.x < 1.25)
+            {
+                open = false;
+            }
+        }
+        
+    }
+
+    void lockedDoor()
+    {
+        if (Needkey)
+        {
+            if(keyCheck.key1 && keyCheck.key2)
+            {
+                Needkey = false;
             }
         }
     }

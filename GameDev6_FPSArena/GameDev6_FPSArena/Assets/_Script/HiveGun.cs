@@ -8,10 +8,16 @@ public class HiveGun : MonoBehaviour {
     public LineRenderer laserLine;
     public Camera fpsCam;
 
+    public GameObject hiveProjectile;
+
     private float nextFire;
     public float fireRate = .25F;
     public float weaponRange = 100;
     public float gunDamage = 1;
+
+
+
+    public int hiveCount = 0;
 	// Use this for initialization
 	void Start () {
         laserLine = GetComponent<LineRenderer>();
@@ -21,6 +27,7 @@ public class HiveGun : MonoBehaviour {
 	void Update () {
         fire();
         createLine();
+        spawnHive();
     }
 
     void fire()
@@ -60,6 +67,21 @@ public class HiveGun : MonoBehaviour {
             laserLine.enabled = false;
         }
     }
+
+    void spawnHive()
+    {
+        if (Input.GetButton("Fire2") && hiveCount<5)
+        {
+            Instantiate(hiveProjectile, transform.position,transform.rotation);
+            hiveCount++;
+        }
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            hiveCount = 0;
+        }
+    }
+
     void createLine()
     {
 

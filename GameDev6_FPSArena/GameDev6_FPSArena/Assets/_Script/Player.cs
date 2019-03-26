@@ -10,8 +10,11 @@ public class Player : MonoBehaviour {
     GameObject Camera;
     MouseLook turn;
 
+    public bool key1;
+    public bool key2;
     
     public float speed = 5;
+    public int Health;
 
 	// Use this for initialization
 	void Start () {
@@ -31,11 +34,7 @@ public class Player : MonoBehaviour {
         Movement();
         lookY();
 
-        if (Input.GetKey(KeyCode.R))
-        {
-          
-            SceneManager.LoadScene("TestingRoom");
-        }
+
 	}
 
     void Movement()
@@ -76,6 +75,33 @@ public class Player : MonoBehaviour {
        rotateY *= Time.deltaTime;
        transform.Rotate(0, rotateY, 0);
     }
+
+
+ 
     
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Key1")
+        {
+            key1 = true;
+            Destroy(other.gameObject);
+        }
+
+        if (other.tag == "Key2")
+        {
+            key2 = true;
+            Destroy(other.gameObject);
+        }
+
+
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "Enemy")
+        {
+            Health -= 5;
+        }
+    }
     
 }

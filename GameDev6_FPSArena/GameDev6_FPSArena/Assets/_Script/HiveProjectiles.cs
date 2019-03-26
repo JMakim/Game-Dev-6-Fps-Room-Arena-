@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HiveProjectiles : MonoBehaviour {
-
+    public HiveGun hiveGun;
     public Transform target;
     public GameObject targetCur;
     Rigidbody rb;
@@ -33,6 +33,13 @@ public class HiveProjectiles : MonoBehaviour {
 
 
         attack();
+
+        if (hit <= 0)
+        {
+            
+            Destroy(this.gameObject);
+            hiveGun.hiveCount--;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -56,9 +63,6 @@ public class HiveProjectiles : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(newDir);
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-        if (hit <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+
     }
 }
