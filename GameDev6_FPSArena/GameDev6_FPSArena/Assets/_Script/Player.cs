@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
     Rigidbody rb;
@@ -12,9 +13,25 @@ public class Player : MonoBehaviour {
 
     public bool key1;
     public bool key2;
+    public bool moving;
+    public bool win;
+    public bool yayPlayed = false;
     
     public float speed = 5;
-    public int Health;
+    public float Health;
+    public float MaxHealth = 100;
+
+    public Text healthText;
+
+    public Slider healthSlider;
+
+    public GameObject pause;
+    public GameObject victory;
+    public GameObject lose;
+
+    public AudioSource[] audios;
+    public AudioSource move;
+    public AudioSource yay;
 
 	// Use this for initialization
 	void Start () {
@@ -33,8 +50,20 @@ public class Player : MonoBehaviour {
 	void Update () {
         Movement();
         lookY();
+        textHealth();
+        MoveSound();
 
+        if (win)
+        {
+            victory.SetActive(true);
+            if (!yay.isPlaying && !yayPlayed)
+            {
+                yay.Play();
+                yayPlayed = true;
+            }
+            Time.timeScale = 0;
 
+        }
 	}
 
     void Movement()
@@ -42,31 +71,59 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
-         
+            moving = true;   
         }
         if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
-            
+            moving = true;
         }
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
-            
+            moving = true;
         }
         if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(Vector3.back * speed * Time.deltaTime);
-          
+            moving = true;
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
-         
+            moving = true;
         }
 
         
 
+    }
+
+    void MoveSound()
+    {
+        if (moving && !move.isPlaying)
+        {
+            move.Play();
+        }
+        if (move.isPlaying && Input.GetKeyUp(KeyCode.A))
+        {
+            move.Stop();
+            moving = false;
+        }
+        if (move.isPlaying && Input.GetKeyUp(KeyCode.D))
+        {
+            move.Stop();
+            moving = false;
+        }
+        if (move.isPlaying && Input.GetKeyUp(KeyCode.S))
+        {
+            move.Stop();
+            moving = false;
+        }
+        if (move.isPlaying && Input.GetKeyUp(KeyCode.W))
+        {
+            move.Stop();
+            moving = false;
+        }
     }
 
     void lookY()
@@ -102,6 +159,20 @@ public class Player : MonoBehaviour {
         {
             Health -= 5;
         }
+        if (other.gameObject.tag == "Enemy2")
+        {
+            Health -= 10;
+        }
+        if (other.gameObject.tag == "Win")
+        {
+            win = true;
+        }
+    }
+
+    void textHealth()
+    {
+        healthText.text = "Health: " + Health;
+        healthSlider.value = Health;
     }
     
 }

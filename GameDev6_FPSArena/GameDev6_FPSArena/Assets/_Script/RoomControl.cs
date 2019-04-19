@@ -10,22 +10,29 @@ public class RoomControl : MonoBehaviour
     public Door doorEast;
     public Door doorSouth;
 
+    public GameObject Lights;
+
     public Collider other;
     public bool lockDoor = false;
     public bool enemyCount = false;
     public bool playerEnter = false;
+    public bool lightPlay = false;
+
+    public AudioSource[] audios;
+    public AudioSource lightsON;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        RoomLock();
+      
+
 
         if(playerEnter && !other)
         {
@@ -42,22 +49,33 @@ public class RoomControl : MonoBehaviour
         if(other.tag == "Player")
         {
             playerEnter = true;
+            if (!lightsON.isPlaying && !lightPlay)
+            {
+                lightsON.Play();
+                lightPlay = true;
+            }
+            Lights.SetActive(true);
         }
         if(other.tag == "Enemy")
         {
             enemyCount = true;
             this.other = other;
+        }    
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            Lights.SetActive(false);
+            playerEnter = false;
+            lightPlay = false;
         }
     }
 
-    void RoomLock()
-    {
-        if(playerEnter && enemyCount)
-        {
-            doorNorth.locked = true;
-            doorWest.locked = true;
-            doorEast.locked = true;
-            doorSouth.locked = true;
-        }
-    }
+  
+
+   
+
+
 }

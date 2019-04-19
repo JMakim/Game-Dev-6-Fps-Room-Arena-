@@ -9,12 +9,18 @@ public class Door : MonoBehaviour
     public bool locked = false;
 
     public bool Needkey = false;
+    public bool doorPlayed = false;
 
     public Player keyCheck;
 
     public GameObject LeftDoor;
     public GameObject RightDoor;
     public float speed = 10.0f;
+
+
+    public AudioSource[] audios;
+    public AudioSource doorOpen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +62,12 @@ public class Door : MonoBehaviour
             {
                 open = true;
             }
+
+            if(!doorOpen.isPlaying && !doorPlayed)
+            {
+                doorOpen.Play();
+                doorPlayed = true;
+            }
         }
     }
 
@@ -69,6 +81,7 @@ public class Door : MonoBehaviour
             if(RightDoor.transform.localPosition.x < 1.25)
             {
                 open = false;
+                doorPlayed = false;
             }
         }
         

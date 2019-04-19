@@ -22,7 +22,6 @@ public class HiveProjectiles : MonoBehaviour {
         targetCur = GameObject.FindGameObjectWithTag("TargetLock");
         target = GameObject.FindGameObjectWithTag("TargetLock").transform;
 
-
            
         if(targetCur != null)
         {
@@ -36,7 +35,6 @@ public class HiveProjectiles : MonoBehaviour {
 
         if (hit <= 0)
         {
-            
             Destroy(this.gameObject);
             hiveGun.hiveCount--;
         }

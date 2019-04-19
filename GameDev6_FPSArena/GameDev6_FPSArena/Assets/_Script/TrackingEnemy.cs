@@ -12,6 +12,11 @@ public class TrackingEnemy : MonoBehaviour {
     public float speed = 20;
 
     public bool TargetOn;
+    public bool screamPlayed = false;
+
+
+    public AudioSource[] audios;
+    public AudioSource scream;
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +50,12 @@ public class TrackingEnemy : MonoBehaviour {
             Debug.DrawRay(transform.position, newDir, Color.red);
             transform.rotation = Quaternion.LookRotation(newDir);
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+            if (!scream.isPlaying && !screamPlayed)
+            {
+                scream.Play();
+                screamPlayed = true;
+            }
         }
     }
 }

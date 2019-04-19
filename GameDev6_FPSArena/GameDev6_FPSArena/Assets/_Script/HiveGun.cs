@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HiveGun : MonoBehaviour {
 
@@ -15,9 +16,14 @@ public class HiveGun : MonoBehaviour {
     public float weaponRange = 100;
     public float gunDamage = 1;
 
-
+    public Text HiveCount;
 
     public int hiveCount = 0;
+
+    public bool spawnPlayed = false;
+
+    public AudioSource[] audio;
+    public AudioSource hiveSpawn;
 	// Use this for initialization
 	void Start () {
         laserLine = GetComponent<LineRenderer>();
@@ -28,6 +34,9 @@ public class HiveGun : MonoBehaviour {
         fire();
         createLine();
         spawnHive();
+
+
+        HiveCount.text = "Active Hive: " + hiveCount;
     }
 
     void fire()
@@ -72,13 +81,21 @@ public class HiveGun : MonoBehaviour {
     {
         if (Input.GetButton("Fire2") && hiveCount<5)
         {
-            Instantiate(hiveProjectile, transform.position,transform.rotation);
+            Instantiate(hiveProjectile, gunEnd.transform.position, gunEnd.transform.rotation);
+
             hiveCount++;
+            if(!hiveSpawn.isPlaying && !spawnPlayed)
+            {
+                hiveSpawn.Play();
+                spawnPlayed = true;
+            }
         }
 
         if (Input.GetKey(KeyCode.R))
         {
             hiveCount = 0;
+            spawnPlayed = false;
+            Destroy(GameObject.FindWithTag("HIVE"));
         }
     }
 
